@@ -69,7 +69,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_primary"
                     android:textSize="64sp"
                     android:fontFamily="sans-serif-thin"
                     tools:text="22°" />
@@ -87,7 +87,7 @@
                 android:id="@+id/tvCityName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_primary"
                 android:textSize="24sp"
                 android:fontFamily="sans-serif-medium"
                 tools:text="Paris"
@@ -98,7 +98,7 @@
                 android:id="@+id/tvWeatherDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#AAAACC"
+                android:textColor="@color/text_secondary"
                 android:textSize="14sp"
                 android:fontFamily="sans-serif"
                 android:textStyle="italic"
@@ -109,7 +109,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#33FFFFFF"
+                android:background="@color/divider_color"
                 android:layout_marginBottom="12dp" />
 
             <!-- Détails : Ressenti -->
@@ -124,14 +124,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/feels_like"
-                    android:textColor="#8888AA"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tvFeelsLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#CCCCEE"
+                    android:textColor="@color/text_accent"
                     android:textSize="13sp"
                     tools:text="22°C" />
             </LinearLayout>
@@ -148,14 +148,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/humidity"
-                    android:textColor="#8888AA"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tvHumidity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#CCCCEE"
+                    android:textColor="@color/text_accent"
                     android:textSize="13sp"
                     tools:text="60%" />
             </LinearLayout>
@@ -172,14 +172,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/wind"
-                    android:textColor="#8888AA"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tvWind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#CCCCEE"
+                    android:textColor="@color/text_accent"
                     android:textSize="13sp"
                     tools:text="2.7 m/s" />
             </LinearLayout>
@@ -195,14 +195,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/pressure"
-                    android:textColor="#8888AA"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tvPressure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#CCCCEE"
+                    android:textColor="@color/text_accent"
                     android:textSize="13sp"
                     tools:text="1013 hPa" />
             </LinearLayout>

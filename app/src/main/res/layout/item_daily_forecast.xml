@@ -34,7 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:fontFamily="sans-serif-medium"
             tools:text="Lundi" />
@@ -50,7 +50,7 @@
                 android:id="@+id/tvDayTempMax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 tools:text="max 22°" />
 
@@ -58,7 +58,7 @@
                 android:id="@+id/tvDayTempMin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#8888AA"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 tools:text="min 12°" />
         </LinearLayout>
@@ -76,7 +76,7 @@
             android:id="@+id/tvPrecipProb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#66AAFF"
+            android:textColor="@color/text_accent"
             android:textSize="12sp"
             android:drawablePadding="4dp"
             tools:text="💧 20%"

@@ -17,7 +17,7 @@
         android:id="@+id/tvHourTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#CCCCEE"
+        android:textColor="@color/text_accent"
         android:textSize="13sp"
         android:fontFamily="sans-serif-medium"
         tools:text="15h"
@@ -37,7 +37,7 @@
         android:id="@+id/tvHourTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_primary"
         android:textSize="15sp"
         android:fontFamily="sans-serif"
         tools:text="22°" />

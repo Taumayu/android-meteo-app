@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:text="@string/github_repo"
         android:textSize="16sp"
-        android:textColor="#4488FF"
+        android:textColor="@color/text_accent"
         android:gravity="center"
         android:padding="16dp"
         android:clickable="true"

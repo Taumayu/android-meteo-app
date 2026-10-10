@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#1A1A2E"
+    android:background="?android:attr/colorBackground"
     android:padding="16dp">
 
     <!-- ═══════════════════════════════════════════
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textColor="#8888AA"
+                    android:textColor="@color/text_secondary"
                     android:textSize="12sp"
                     android:fontFamily="sans-serif-light"
                     tools:text="Last update : 23:43" />
@@ -61,7 +61,7 @@
                         android:background="?selectableItemBackgroundBorderless"
                         android:src="@android:drawable/ic_menu_preferences"
                         android:contentDescription="@string/settings"
-                        android:tint="#FFFFFF" />
+                        android:tint="?android:attr/textColorPrimary" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -88,7 +88,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/text_primary"
                         android:textSize="64sp"
                         android:fontFamily="sans-serif-thin"
                         tools:text="22°" />
@@ -106,7 +106,7 @@
                     android:id="@+id/tvCityName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_primary"
                     android:textSize="24sp"
                     android:fontFamily="sans-serif-medium"
                     tools:text="Paris"
@@ -117,7 +117,7 @@
                     android:id="@+id/tvWeatherDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#AAAACC"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp"
                     android:fontFamily="sans-serif"
                     android:textStyle="italic"
@@ -128,7 +128,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#33FFFFFF"
+                    android:background="@color/divider_color"
                     android:layout_marginBottom="12dp" />
 
                 <!-- Détails : Ressenti -->
@@ -143,14 +143,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/feels_like"
-                        android:textColor="#8888AA"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/tvFeelsLike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#CCCCEE"
+                        android:textColor="@color/text_accent"
                         android:textSize="13sp"
                         tools:text="22°C" />
                 </LinearLayout>
@@ -167,14 +167,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/humidity"
-                        android:textColor="#8888AA"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/tvHumidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#CCCCEE"
+                        android:textColor="@color/text_accent"
                         android:textSize="13sp"
                         tools:text="60%" />
                 </LinearLayout>
@@ -191,14 +191,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/wind"
-                        android:textColor="#8888AA"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/tvWind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#CCCCEE"
+                        android:textColor="@color/text_accent"
                         android:textSize="13sp"
                         tools:text="2.7 m/s" />
                 </LinearLayout>
@@ -214,14 +214,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/pressure"
-                        android:textColor="#8888AA"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/tvPressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#CCCCEE"
+                        android:textColor="@color/text_accent"
                         android:textSize="13sp"
                         tools:text="1013 hPa" />
                 </LinearLayout>
@@ -232,7 +232,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rest_of_day"
-                android:textColor="#CCCCEE"
+                android:textColor="@color/text_accent"
                 android:textSize="16sp"
                 android:fontFamily="sans-serif-medium"
                 android:layout_marginBottom="8dp" />
@@ -262,7 +262,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/five_day_forecast"
-                android:textColor="#CCCCEE"
+                android:textColor="@color/text_accent"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-medium"
                 android:layout_marginBottom="12dp" />

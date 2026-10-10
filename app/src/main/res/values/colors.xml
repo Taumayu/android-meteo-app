@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light Theme Colors -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_stroke">#E0E0E0</color>
+
+    <color name="hourly_start">#E3F2FD</color>
+    <color name="hourly_end">#BBDEFB</color>
+
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_accent">#1976D2</color>
+    
+    <color name="divider_color">#E0E0E0</color>
+    <color name="window_background">#F5F5F5</color>
+    <color name="status_bar">#E0E0E0</color>
+</resources>
