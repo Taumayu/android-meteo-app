@@ -1,11 +1,13 @@
 package com.meteo.app.ui
 
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.Manifest
-import android.content.pm.PackageManager
-import android.location.Location
 import android.text.InputType
 import android.widget.EditText
 import android.widget.ImageButton
@@ -14,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +51,9 @@ class MainActivity : AppCompatActivity() {
 
     private val PREFS_NAME = "MeteoPrefs"
     private val KEY_API = "openweather_api_key"
+    private val KEY_THEME = "app_theme"
+    private val KEY_IS_GPS = "is_using_gps"
+    private val KEY_CITY = "manual_city"
     private val LOCATION_PERMISSION_REQUEST_CODE = 100
 
     /** Default city */
@@ -67,8 +73,7 @@ class MainActivity : AppCompatActivity() {
     // ──────────────────────────────────────────────
 
     private lateinit var tvLastUpdate: TextView
-    private lateinit var btnSearch: ImageButton
-    private lateinit var btnGps: ImageButton
+    private lateinit var btnSettings: ImageButton
     
     private lateinit var tvCurrentTemp: TextView
     private lateinit var ivCurrentIcon: ImageView
@@ -101,6 +106,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val themePref = prefs.getInt(KEY_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(themePref)
+
         initViews()
         initAdapters()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -110,6 +119,24 @@ class MainActivity : AppCompatActivity() {
             showApiKeyPrompt()
         } else {
             initWeatherManager(savedKey)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Check preferences on resume (might have changed in Settings)
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        isUsingGps = prefs.getBoolean(KEY_IS_GPS, false)
+        currentCity = prefs.getString(KEY_CITY, "Paris") ?: "Paris"
+        
+        val savedKey = getSavedApiKey()
+        if (!savedKey.isNullOrEmpty() && ::weatherManager.isInitialized) {
+            // Apply location logic
+            if (isUsingGps) {
+                checkLocationPermissionAndFetch()
+            } else {
+                weatherManager.changeCity(currentCity)
+            }
         }
     }
 
@@ -130,8 +157,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         // Colonne gauche
         tvLastUpdate = findViewById(R.id.tvLastUpdate)
-        btnSearch = findViewById(R.id.btnSearch)
-        btnGps = findViewById(R.id.btnGps)
+        btnSettings = findViewById(R.id.btnSettings)
         
         tvCurrentTemp = findViewById(R.id.tvCurrentTemp)
         ivCurrentIcon = findViewById(R.id.ivCurrentIcon)
@@ -146,10 +172,8 @@ class MainActivity : AppCompatActivity() {
         // Colonne droite
         rvDailyForecast = findViewById(R.id.rvDailyForecast)
         
-        btnSearch.setOnClickListener { showSearchDialog() }
-        btnGps.setOnClickListener { 
-            isUsingGps = true
-            checkLocationPermissionAndFetch() 
+        btnSettings.setOnClickListener { 
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
@@ -303,30 +327,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     // ══════════════════════════════════════════════
-    // Geolocation and Search
+    // Geolocation
     // ══════════════════════════════════════════════
-
-    private fun showSearchDialog() {
-        val input = EditText(this)
-        input.inputType = InputType.TYPE_CLASS_TEXT
-        input.hint = getString(R.string.enter_city_name)
-
-        AlertDialog.Builder(this)
-            .setTitle(R.string.change_location)
-            .setView(input)
-            .setPositiveButton(R.string.search) { _, _ ->
-                val newCity = input.text.toString().trim()
-                if (newCity.isNotEmpty()) {
-                    isUsingGps = false
-                    currentCity = newCity
-                    if (::weatherManager.isInitialized) {
-                        weatherManager.changeCity(currentCity)
-                    }
-                }
-            }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
-    }
 
     private fun checkLocationPermissionAndFetch() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

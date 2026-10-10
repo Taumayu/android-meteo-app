@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:attr/colorBackground"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Theme Selection -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/theme"
+        android:textSize="16sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginBottom="8dp"/>
+        
+    <Spinner
+        android:id="@+id/spinnerTheme"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_card_glass" />
+
+    <!-- Location Mode -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/location_mode"
+        android:textSize="16sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginBottom="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/rgLocationMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <RadioButton
+            android:id="@+id/rbGps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gps_location"
+            android:textColor="?android:attr/textColorPrimary"/>
+
+        <RadioButton
+            android:id="@+id/rbManual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/manual_city"
+            android:textColor="?android:attr/textColorPrimary"/>
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/etCityName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_city_name"
+        android:inputType="text"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- API Key -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/api_key"
+        android:textSize="16sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnChangeApiKey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change API Key"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- GitHub Link -->
+    <TextView
+        android:id="@+id/tvGithubLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/github_repo"
+        android:textSize="16sp"
+        android:textColor="#4488FF"
+        android:gravity="center"
+        android:padding="16dp"
+        android:clickable="true"
+        android:focusable="true"/>
+
+</LinearLayout>
