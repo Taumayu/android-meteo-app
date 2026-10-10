@@ -63,13 +63,14 @@
             android:textColor="?android:attr/textColorPrimary"/>
     </RadioGroup>
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/etCityName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_city_name"
         android:inputType="text"
         android:textColor="?android:attr/textColorPrimary"
+        android:completionThreshold="2"
         android:layout_marginBottom="24dp"/>
 
     <!-- API Key -->
