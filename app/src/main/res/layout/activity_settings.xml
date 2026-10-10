@@ -29,7 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_card_glass" />
+        android:background="@drawable/bg_card_glass"
+        android:popupBackground="@drawable/bg_spinner_popup" />
 
     <!-- Location Mode -->
     <TextView
