@@ -1,51 +1,51 @@
-# Android Météo App ☀️🌧️
+# Android Weather App ☀️🌧️
 
-Une application Android moderne permettant de consulter la météo actuelle et les prévisions sur 5 jours pour la ville de Paris (par défaut), développée en Kotlin natif.
+A modern Android application for viewing the current weather and 5-day forecasts for Paris (default city), built natively with Kotlin.
 
-## Fonctionnalités
+## Features
 
-- **Météo Actuelle** : Température, température ressentie, humidité, vitesse du vent, pression, etc.
-- **Reste de la journée** : Prévisions horaires par tranches de 3 heures (températures et icônes).
-- **Prévisions 5 jours** : Min/Max, condition dominante et probabilité de précipitation.
-- **Rafraîchissement Auto** : L'application récupère de nouvelles données toutes les 5 minutes automatiquement en tâche de fond (lorsque l'application est ouverte).
-- **Stockage Sécurisé de la Clé API** : La clé API d'OpenWeather est demandée au premier lancement de l'application et est stockée de manière chiffrée via `EncryptedSharedPreferences`.
-- **Interface Utilisateur Moderne** : Thème sombre ("Dark Navy"), cartes utilisant l'effet glassmorphism, disposition en deux colonnes (optimisé tablettes ou grands écrans).
+- **Current Weather**: Temperature, "feels like" temperature, humidity, wind speed, pressure, etc.
+- **Rest of the Day**: Hourly forecasts in 3-hour intervals (temperatures and icons).
+- **5-Day Forecast**: Min/Max temperatures, dominant weather condition, and probability of precipitation.
+- **Auto Refresh**: The application automatically fetches new data every 5 minutes in the background (when the app is running).
+- **Secure API Key Storage**: The OpenWeather API key is requested upon the first launch and securely stored using `EncryptedSharedPreferences`.
+- **Modern User Interface**: Dark Navy theme, glassmorphism card effects, and a two-column layout (optimized for tablets or large screens).
 
 ## Architecture
 
-L'application est structurée selon une architecture claire (MVC/MVVM-like sans composants d'architecture lourds pour l'instant) :
+The application is built on a clean architecture (MVC/MVVM-like, without heavy architecture components for now):
 
-- **`models`** : Modèles de données purs (Data classes Kotlin).
-- **`api`** : Gestion des appels réseau directs avec `HttpURLConnection` vers OpenWeatherMap, avec un parsing JSON manuel.
-- **`repository`** : `WeatherRepository` qui orchestre l'API, agrège les données, et fait office de source de vérité en mémoire.
-- **`scheduler`** : `WeatherRefreshScheduler` basé sur `Timer` pour gérer la fréquence des mises à jour (5 minutes).
-- **`ui`** : 
-  - `MainActivity` : Gère l'affichage en mode portrait/paysage, affiche les RecyclerViews.
-  - `DailyForecastAdapter` & `HourlyForecastAdapter` : Adaptateurs pour la gestion des listes RecyclerView.
-  - Dialog d'initialisation pour la clé API chiffrée.
+- **`models`**: Pure data models (Kotlin Data classes).
+- **`api`**: Direct network requests using `HttpURLConnection` to OpenWeatherMap with manual JSON parsing.
+- **`repository`**: `WeatherRepository` orchestrates the API, aggregates data, and acts as the in-memory single source of truth.
+- **`scheduler`**: `WeatherRefreshScheduler` uses a `Timer` to handle the update frequency (5 minutes).
+- **`ui`**: 
+  - `MainActivity`: Handles portrait/landscape displays and sets up RecyclerViews.
+  - `DailyForecastAdapter` & `HourlyForecastAdapter`: Adapters for handling the RecyclerView lists.
+  - Initialization dialog for the encrypted API key.
 
-## Dépendances
+## Dependencies
 
-L'application limite le nombre de bibliothèques tierces, mais utilise les composants suivants :
-- `androidx.appcompat:appcompat` et `androidx.core:core-ktx` pour les composants UI standards.
-- `com.google.android.material:material` pour le design système.
-- `androidx.recyclerview:recyclerview` pour l'affichage de listes performantes.
-- `androidx.security:security-crypto` pour le stockage chiffré de la clé API avec l'Android Keystore.
+The app minimizes the use of third-party libraries, relying on the following standard components:
+- `androidx.appcompat:appcompat` and `androidx.core:core-ktx` for standard UI components.
+- `com.google.android.material:material` for the design system.
+- `androidx.recyclerview:recyclerview` for efficient list rendering.
+- `androidx.security:security-crypto` for encrypted storage of the API key using the Android Keystore.
 
-## Installation et Compilation
+## Setup and Build
 
-### Prérequis
+### Prerequisites
 - Java JDK 17
-- Android SDK (avec Command Line Tools et Build Tools 34.0.0)
+- Android SDK (including Command Line Tools and Build Tools 34.0.0)
 
-### Pour construire l'application
-Le projet utilise Gradle. Vous pouvez générer l'APK via le terminal :
+### Building the app
+The project uses Gradle. You can build the APK via the terminal:
 ```bash
 ./gradlew assembleDebug
 ```
-L'APK se trouvera dans `app/build/outputs/apk/debug/app-debug.apk`.
+The APK will be located at `app/build/outputs/apk/debug/app-debug.apk`.
 
-### Premier Lancement
-1. Ouvrez l'application.
-2. Une boîte de dialogue vous demandera votre clé API **OpenWeatherMap**.
-3. Saisissez votre clé. Si elle est valide, l'application chargera automatiquement la météo et sauvegardera votre clé.
+### First Launch
+1. Open the application.
+2. A dialog will prompt you for your **OpenWeatherMap** API key.
+3. Enter your key. If valid, the app will automatically load the weather data and securely save your key.
