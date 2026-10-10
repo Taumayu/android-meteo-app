@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Item pour un créneau horaire (reste de la journée, scroll horizontal).
+     Affiche : heure, icône, température. -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/bg_card_hourly"
+    android:padding="10dp"
+    android:layout_marginEnd="8dp">
+
+    <!-- Heure -->
+    <TextView
+        android:id="@+id/tvHourTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#CCCCEE"
+        android:textSize="13sp"
+        android:fontFamily="sans-serif-medium"
+        tools:text="15h"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Icône météo -->
+    <ImageView
+        android:id="@+id/ivHourIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="Icône horaire"
+        tools:src="@android:drawable/ic_menu_day"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Température -->
+    <TextView
+        android:id="@+id/tvHourTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif"
+        tools:text="22°" />
+
+</LinearLayout>

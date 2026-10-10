@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Item pour un jour de prévision (colonne droite).
+     Affiche : nom du jour, icône, min/max, probabilité de pluie. -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_card_glass"
+    android:padding="14dp"
+    android:layout_marginBottom="8dp">
+
+    <!-- Ligne supérieure : Jour + Températures -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <!-- Icône météo -->
+        <ImageView
+            android:id="@+id/ivDayIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="Icône prévision"
+            android:layout_marginEnd="10dp"
+            tools:src="@android:drawable/ic_menu_day" />
+
+        <!-- Nom du jour -->
+        <TextView
+            android:id="@+id/tvDayName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium"
+            tools:text="Lundi" />
+
+        <!-- Min / Max -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/tvDayTempMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                tools:text="max 22°" />
+
+            <TextView
+                android:id="@+id/tvDayTempMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#8888AA"
+                android:textSize="12sp"
+                tools:text="min 12°" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Ligne inférieure : Probabilité de pluie + barre -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Icône goutte + pourcentage -->
+        <TextView
+            android:id="@+id/tvPrecipProb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#66AAFF"
+            android:textSize="12sp"
+            android:drawablePadding="4dp"
+            tools:text="💧 20%"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Barre de précipitation -->
+        <ProgressBar
+            android:id="@+id/pbPrecipBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:max="100"
+            android:progressDrawable="@drawable/progress_precip"
+            tools:progress="20" />
+    </LinearLayout>
+
+</LinearLayout>
