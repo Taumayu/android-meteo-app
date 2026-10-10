@@ -6,7 +6,7 @@
     <string name="humidity">Humidity</string>
     <string name="wind">Wind</string>
     <string name="pressure">Pressure</string>
-    <string name="rest_of_day">Rest of the day</string>
+    <string name="rest_of_day">Next 24h</string>
     <string name="five_day_forecast">5-Day Forecast</string>
     <string name="welcome">Welcome</string>
     <string name="api_key_prompt">Please enter your OpenWeatherMap API key to continue.</string>
