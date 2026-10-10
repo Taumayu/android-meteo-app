@@ -32,16 +32,48 @@
             android:orientation="vertical"
             android:paddingEnd="8dp">
 
-            <!-- Dernière mise à jour (top left) -->
-            <TextView
-                android:id="@+id/tvLastUpdate"
-                android:layout_width="wrap_content"
+            <!-- Top Bar: Dernière MAJ + Boutons (Search, GPS) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#8888AA"
-                android:textSize="12sp"
-                android:fontFamily="sans-serif-light"
-                tools:text="Dernière MAJ : 23:43"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:id="@+id/tvLastUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="#8888AA"
+                    android:textSize="12sp"
+                    android:fontFamily="sans-serif-light"
+                    tools:text="Last update : 23:43" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btnSearch"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:src="@android:drawable/ic_menu_search"
+                        android:contentDescription="@string/search"
+                        android:tint="#FFFFFF" />
+
+                    <ImageButton
+                        android:id="@+id/btnGps"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:src="@android:drawable/ic_menu_mylocation"
+                        android:contentDescription="@string/gps_location"
+                        android:layout_marginStart="8dp"
+                        android:tint="#FFFFFF" />
+                </LinearLayout>
+            </RelativeLayout>
 
             <!-- ══════ CARTE MÉTÉO ACTUELLE ══════ -->
             <LinearLayout
@@ -120,7 +152,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Ressenti"
+                        android:text="@string/feels_like"
                         android:textColor="#8888AA"
                         android:textSize="13sp" />
 
@@ -144,7 +176,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Humidité"
+                        android:text="@string/humidity"
                         android:textColor="#8888AA"
                         android:textSize="13sp" />
 
@@ -168,7 +200,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Vent"
+                        android:text="@string/wind"
                         android:textColor="#8888AA"
                         android:textSize="13sp" />
 
@@ -191,7 +223,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Pression"
+                        android:text="@string/pressure"
                         android:textColor="#8888AA"
                         android:textSize="13sp" />
 
@@ -209,7 +241,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reste de la journée"
+                android:text="@string/rest_of_day"
                 android:textColor="#CCCCEE"
                 android:textSize="16sp"
                 android:fontFamily="sans-serif-medium"
@@ -239,7 +271,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Prévisions 5 jours"
+                android:text="@string/five_day_forecast"
                 android:textColor="#CCCCEE"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-medium"

@@ -23,7 +23,7 @@ class OpenWeatherService(private val apiKey: String) {
     companion object {
         private const val BASE_URL = "https://api.openweathermap.org/data/2.5"
         private const val UNITS = "metric"
-        private const val LANG = "fr"
+        private const val LANG = "en"
         private const val CONNECT_TIMEOUT_MS = 10_000
         private const val READ_TIMEOUT_MS = 15_000
     }

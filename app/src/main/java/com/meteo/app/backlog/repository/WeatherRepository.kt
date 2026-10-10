@@ -173,7 +173,7 @@ class WeatherRepository(private val weatherService: OpenWeatherService) {
         return items.groupingBy { it.weatherDescription }
             .eachCount()
             .maxByOrNull { it.value }
-            ?.key ?: "Inconnu"
+            ?.key ?: "Unknown"
     }
 
     /**

@@ -1,3 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Météo</string>
+    <string name="app_name">Weather</string>
+    <string name="last_update">Last update: %1$s at %2$s</string>
+    <string name="feels_like">Feels like</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="pressure">Pressure</string>
+    <string name="rest_of_day">Rest of the day</string>
+    <string name="five_day_forecast">5-Day Forecast</string>
+    <string name="welcome">Welcome</string>
+    <string name="api_key_prompt">Please enter your OpenWeatherMap API key to continue.</string>
+    <string name="validate">Validate</string>
+    <string name="key_cannot_be_empty">Key cannot be empty</string>
+    <string name="change_location">Change Location</string>
+    <string name="enter_city_name">Enter city name (e.g. London, New York)</string>
+    <string name="cancel">Cancel</string>
+    <string name="search">Search</string>
+    <string name="gps_location">Use GPS</string>
+    <string name="error_location">Failed to get location</string>
+    <string name="permission_denied">Location permission denied</string>
 </resources>

@@ -3,17 +3,25 @@ package com.meteo.app.ui
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
+import android.text.InputType
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.EditText
-import android.text.InputType
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.meteo.app.R
 import com.meteo.app.backlog.WeatherManager
 import com.meteo.app.backlog.models.WeatherInfo
@@ -40,21 +48,28 @@ class MainActivity : AppCompatActivity() {
 
     private val PREFS_NAME = "MeteoPrefs"
     private val KEY_API = "openweather_api_key"
+    private val LOCATION_PERMISSION_REQUEST_CODE = 100
 
-    /** Ville par défaut. */
-    private val DEFAULT_CITY = "Paris"
+    /** Default city */
+    private var currentCity = "Paris"
 
     /** Gestionnaire météo (API + Repository + Scheduler). */
     private lateinit var weatherManager: WeatherManager
 
-    /** Handler pour poster les mises à jour UI sur le thread principal. */
+    /** Handler for UI updates and periodic GPS */
     private val mainHandler = Handler(Looper.getMainLooper())
+    
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var isUsingGps = false
 
     // ──────────────────────────────────────────────
     // Vues — Colonne gauche
     // ──────────────────────────────────────────────
 
     private lateinit var tvLastUpdate: TextView
+    private lateinit var btnSearch: ImageButton
+    private lateinit var btnGps: ImageButton
+    
     private lateinit var tvCurrentTemp: TextView
     private lateinit var ivCurrentIcon: ImageView
     private lateinit var tvCityName: TextView
@@ -88,6 +103,7 @@ class MainActivity : AppCompatActivity() {
 
         initViews()
         initAdapters()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         
         val savedKey = getSavedApiKey()
         if (savedKey.isNullOrEmpty()) {
@@ -114,6 +130,9 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         // Colonne gauche
         tvLastUpdate = findViewById(R.id.tvLastUpdate)
+        btnSearch = findViewById(R.id.btnSearch)
+        btnGps = findViewById(R.id.btnGps)
+        
         tvCurrentTemp = findViewById(R.id.tvCurrentTemp)
         ivCurrentIcon = findViewById(R.id.ivCurrentIcon)
         tvCityName = findViewById(R.id.tvCityName)
@@ -126,6 +145,12 @@ class MainActivity : AppCompatActivity() {
 
         // Colonne droite
         rvDailyForecast = findViewById(R.id.rvDailyForecast)
+        
+        btnSearch.setOnClickListener { showSearchDialog() }
+        btnGps.setOnClickListener { 
+            isUsingGps = true
+            checkLocationPermissionAndFetch() 
+        }
     }
 
     /**
@@ -161,16 +186,12 @@ class MainActivity : AppCompatActivity() {
         // Callback erreur : NE PAS mettre à jour l'UI, juste afficher un Toast
         weatherManager.onRefreshError { errorMessage ->
             mainHandler.post {
-                Toast.makeText(
-                    this,
-                    "Erreur de mise à jour : $errorMessage",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "Update error: $errorMessage", Toast.LENGTH_SHORT).show()
             }
         }
 
         // Démarrer le rafraîchissement auto (premier appel immédiat + toutes les 5 min)
-        weatherManager.start(DEFAULT_CITY)
+        weatherManager.start(currentCity)
     }
 
     // ══════════════════════════════════════════════
@@ -189,7 +210,7 @@ class MainActivity : AppCompatActivity() {
         val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         val dateFormat = SimpleDateFormat("dd/MM", Locale.getDefault())
         val updateDate = Date(info.lastUpdateTimestamp)
-        tvLastUpdate.text = "Dernière MAJ : ${dateFormat.format(updateDate)} à ${timeFormat.format(updateDate)}"
+        tvLastUpdate.text = getString(R.string.last_update, dateFormat.format(updateDate), timeFormat.format(updateDate))
 
         // ── Météo actuelle (colonne gauche) ──
         info.currentWeather?.let { current ->
@@ -264,20 +285,103 @@ class MainActivity : AppCompatActivity() {
         input.hint = "Clé API OpenWeather"
 
         AlertDialog.Builder(this)
-            .setTitle("Bienvenue")
-            .setMessage("Veuillez entrer votre clé API OpenWeatherMap pour continuer.")
+            .setTitle(R.string.welcome)
+            .setMessage(R.string.api_key_prompt)
             .setView(input)
             .setCancelable(false)
-            .setPositiveButton("Valider") { _, _ ->
+            .setPositiveButton(R.string.validate) { _, _ ->
                 val key = input.text.toString().trim()
                 if (key.isNotEmpty()) {
                     saveApiKey(key)
                     initWeatherManager(key)
                 } else {
-                    Toast.makeText(this, "La clé ne peut pas être vide", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.key_cannot_be_empty, Toast.LENGTH_SHORT).show()
                     showApiKeyPrompt()
                 }
             }
             .show()
+    }
+
+    // ══════════════════════════════════════════════
+    // Geolocation and Search
+    // ══════════════════════════════════════════════
+
+    private fun showSearchDialog() {
+        val input = EditText(this)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        input.hint = getString(R.string.enter_city_name)
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.change_location)
+            .setView(input)
+            .setPositiveButton(R.string.search) { _, _ ->
+                val newCity = input.text.toString().trim()
+                if (newCity.isNotEmpty()) {
+                    isUsingGps = false
+                    currentCity = newCity
+                    if (::weatherManager.isInitialized) {
+                        weatherManager.changeCity(currentCity)
+                    }
+                }
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun checkLocationPermissionAndFetch() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        } else {
+            fetchLocationAndWeather()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                fetchLocationAndWeather()
+            } else {
+                Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show()
+                isUsingGps = false
+            }
+        }
+    }
+
+    private fun fetchLocationAndWeather() {
+        try {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    if (::weatherManager.isInitialized) {
+                        weatherManager.startByCoords(location.latitude, location.longitude)
+                    }
+                    // Schedule next GPS fetch in 1 hour if still using GPS
+                    scheduleHourlyLocationUpdate()
+                } else {
+                    Toast.makeText(this, R.string.error_location, Toast.LENGTH_SHORT).show()
+                    isUsingGps = false
+                }
+            }
+        } catch (e: SecurityException) {
+            Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private val hourlyGpsRunnable = object : Runnable {
+        override fun run() {
+            if (isUsingGps) {
+                checkLocationPermissionAndFetch()
+            }
+        }
+    }
+
+    private fun scheduleHourlyLocationUpdate() {
+        mainHandler.removeCallbacks(hourlyGpsRunnable)
+        // 1 hour in milliseconds
+        mainHandler.postDelayed(hourlyGpsRunnable, 60 * 60 * 1000L)
     }
 }

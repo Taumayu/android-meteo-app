@@ -89,7 +89,7 @@ class DailyForecastAdapter : RecyclerView.Adapter<DailyForecastAdapter.DayViewHo
             return try {
                 val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val date = inputFormat.parse(dateString) ?: return dateString
-                val outputFormat = SimpleDateFormat("EEEE", Locale.FRENCH)
+                val outputFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
                 outputFormat.format(date).replaceFirstChar { it.uppercase() }
             } catch (e: Exception) {
                 dateString
